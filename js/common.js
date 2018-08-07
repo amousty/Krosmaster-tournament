@@ -5,6 +5,27 @@ var pickedTeams = [];
 var players = [];
 var maps = [];
 var teams = []
+var characters = [];
+
+function initGlobalVariables(){
+  	$.ajax({
+  		type: 'POST',
+  		url: 'data.json',
+  		dataType: 'json',
+      async:false,
+  		success : function(result) {
+  			players = result.players;
+        maps = result.maps;
+  			teams = result.teams;
+  			characters = result.characters;
+  		},
+  		error : function(jqXHR, textStatus, errorThrown) {
+  			console.log("error " + textStatus);
+  			console.log("incoming Text " + jqXHR.responseText);
+  		}
+  	});
+}
+
 function intitalizeEvent(){
   $("#menu-toggle").click(function (e) {
       e.preventDefault();
@@ -71,7 +92,7 @@ function calculateInitiative(teamID){
 	var init = 0;
   if(typeof teams[teamID] !== "undefined" && teams[teamID].composition.length > 0){
     for(var i = 0; i < teams[teamID].composition.length; i++){
-  		init += parseInt(teams[teamID].composition[i].init);
+  		init += parseInt(characters[teams[teamID].composition[i].id].init);
   	}
   }
 	return init;

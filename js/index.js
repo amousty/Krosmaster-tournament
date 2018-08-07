@@ -1,39 +1,30 @@
 
 
 $(document).ready(function(){
+	if((typeof players === "undefined" || typeof maps === "undefined" || typeof teams === "undefined" || typeof characters === "undefined")
+			|| (players.length < 1 || maps.length < 1 || teams.length < 1 || characters.length < 1) ){
+			// Doc has not been init before
+			initGlobalVariables();
+			includeHTML();
+			intitalizeEvent();
+	}
 	loadPlayers();
-  intitalizeEvent();
-	includeHTML();
 });
 
 
 function loadPlayers(){
-	$.ajax({
-		type: 'POST',
-		url: 'data.json',
-		dataType: 'json',
-		success : function(result) {
-			players = result.players;
-			teams = result.teams;
 			// Class by point
-			sortResults(players, "points", false);
-
-			buildPlayersTable(players, teams);
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			console.log("error " + textStatus);
-			console.log("incoming Text " + jqXHR.responseText);
-		}
-	});
+			sortResults(players, "points", false
+			buildPlayersTable();
 }
 
-function buildPlayersTable(players, teams){
+function buildPlayersTable(){
 	for(var i = 0; i < players.length; i++){
 				var id = "";
         var name = players[i]["name"];
         var teamNumber = players[i].team !== "" ? players[i].team : pickAValue(teams, "T", true);
 				var points 	= players[i]["points"];
-				var tooltipTeam = buildTooltipTeam(teamNumber, teams); // Get team text
+				var tooltipTeam = buildTooltipTeam(teamNumber, teams, characters); // Get team text
 				//var tr = $('<tr data-toggle="tooltip" data-placement="right" title="' + tooltipTeam +'">');
 				var tr = $('<tr data-toggle="collapse" data-target="#team_' + (i + 1) + '" class="clickable">');
 
@@ -61,28 +52,28 @@ function buildPlayersTable(players, teams){
 	}
 }
 
-function buildTooltipTeam(tn, teams){
+function buildTooltipTeam(tn){
 	var teamName = "";
 	var lineBreak = "&#013;";
-	var characters = teams[tn-1].composition;
+	var idCharcterList = teams[tn-1].composition;
 	teamName += "<ul class='list-group list-group-flush'>";
-	for(var i = 0; i < characters.length; i++){
+	for(var i = 0; i < idCharcterList.length; i++){
 		teamName +=
-			"<li class='list-group-item " + characters[i].type + "'>" +
+			"<li class='list-group-item " + characters[idCharcterList[i].id].type + "'>" +
 
 			"<span class='badge badge-primary badge-pill'>" +
-			"<i class='fas fa-bolt'></i> " +  characters[i].init +
+			"<i class='fas fa-bolt'></i> " +  characters[idCharcterList[i].id].init +
 			"</span>" + " " +
 
 			"<span class='badge badge-secondary badge-pill'>" +
-			"<i class='fas fa-sort-numeric-up'></i> " + 	characters[i].level +
+			"<i class='fas fa-sort-numeric-up'></i> " + 	characters[idCharcterList[i].id].level +
 			"</span>" + " " +
 
 			"<span class='badge badge-danger badge-pill'>" +
-			"<i class='fas fa-heart' ></i> " + 	characters[i].hp +
+			"<i class='fas fa-heart' ></i> " + 	characters[idCharcterList[i].id].hp +
 			"</span>" + " " +
 
-			characters[i].name +
+			characters[idCharcterList[i].id].name +
 			"</li>";
 	}
 	teamName += "</ul>";
@@ -91,8 +82,8 @@ function buildTooltipTeam(tn, teams){
 
 function generateTeamTable(id, tn, teams){
 	var table = "<tr>";
-	table += "<td colspan='2' class='hiddenRow'></td>";
-	table += "<td colspan='2' class='hiddenRow'>";
+	//table += "<td colspan='2' class='hiddenRow'></td>";
+	table += "<td colspan='4' class='hiddenRow'>";
 	table += "<div id='team_" + id + "' class='collapse'>";
 	table += buildTooltipTeam(tn, teams);
 	table += "</div>";
