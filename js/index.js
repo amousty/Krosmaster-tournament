@@ -16,16 +16,23 @@ function loadDashboardData(){
 			//buildPlayersTable();
 			$('#totPlayer').text(players.length);
 			$('#matchCount').text(Math.floor(players.length/2));
+			var s1Tot = 0;
 			var s2Tot = 0;
 			var s3Tot = 0;
 			var s4Tot = 0;
 			var s5Tot = 0;
+			var s6Tot = 0;
+			var s1= 0;
 			var s2 = 0;
 			var s3 = 0;
 			var s4 = 0;
 			var s5 = 0;
+			var s6 = 0;
 			for(var i = 0; i < characters.length; i++){
 				switch(characters[i].season){
+					case 1 :
+						s1Tot++;
+						break;
 					case 2 :
 					 	s2Tot++;
 						break;
@@ -38,6 +45,9 @@ function loadDashboardData(){
 					case 5 :
 						s5Tot++;
 						break;
+					case 6 :
+						s6Tot++;
+						break;
 				}
 			}
 			for(var i = 0; i < teams.length; i++){
@@ -45,6 +55,9 @@ function loadDashboardData(){
 					for(var k = 0; k < characters.length; k++){
 						if(characters[k].id === teams[i].composition[j].id){
 							switch(characters[k].season){
+								case 1 :
+									s1++;
+									break;+
 								case 2 :
 								 	s2++;
 									break;
@@ -57,6 +70,9 @@ function loadDashboardData(){
 								case 5 :
 									s5++;
 									break;
+								case 5 :
+									s6++;
+									break;
 							}
 							break;
 						}
@@ -64,17 +80,19 @@ function loadDashboardData(){
 
 				}
 			}
-			$('#s2Tot').text(s2Tot);
+			//$('#s2Tot').text(s2Tot);
 			$('#s3Tot').text(s3Tot);
 			$('#s4Tot').text(s4Tot);
 			$('#s5Tot').text(s5Tot);
-			$('#s2Count').text(s2);
+			$('#s6Tot').text(s6Tot);
+			//$('#s2Count').text(s2);
 			$('#s3Count').text(s3);
 			$('#s4Count').text(s4);
 			$('#s5Count').text(s5);
+			$('#s6Count').text(s6);
 
-			var charTot = s2Tot + s3Tot + s4Tot + s5Tot;
-			var charCount = s2 + s3 + s4 + s5;
+			var charTot = s1Tot + s2Tot + s3Tot + s4Tot + s5Tot + s6Tot;
+			var charCount = s1 + s2 + s3 + s4 + s5 + s6;
 			$('#charCount').text(charCount);
 			$('#charTot').text(charTot);
 
