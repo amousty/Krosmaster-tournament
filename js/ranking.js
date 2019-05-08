@@ -20,9 +20,9 @@ function buildPlayersTable(){
 	for(var i = 0; i < players.length; i++){
 				var id = "";
         var name = players[i]["name"];
-        var teamNumber = players[i].team !== "" ? players[i].team : pickAValue(teams, "T", true);
+        var teamID = players[i].team !== "" ? players[i].team : pickAValue(teams, "T", true);
 				var points 	= players[i]["points"];
-				var tooltipTeam = buildTooltipTeam(teamNumber, teams, characters); // Get team text
+				var tooltipTeam = buildTooltipTeam(teamID); // Get team text
 				//var tr = $('<tr data-toggle="tooltip" data-placement="right" title="' + tooltipTeam +'">');
 				var tr = $('<tr data-toggle="collapse" data-target="#team_' + (i + 1) + '" class="clickable">');
 
@@ -43,36 +43,54 @@ function buildPlayersTable(){
 
         tr.append('<td>' + id + '</td>');
         tr.append($('<td>').text(name));
-        tr.append($('<td>').text(teams[teamNumber-1].name + " (" + teamNumber + ")")); // Append the tooltip
+        tr.append($('<td>').text(teams[teamID-1].name + " (" + teamID + ")")); // Append the tooltip
 				tr.append($('<td>').text(points));
 				$('#playersTableTBody').append(tr);
-				$('#playersTableTBody').append(generateTeamTable(i+1, teamNumber, teams));
+				$('#playersTableTBody').append(generateTeamTable(i+1, teamID, teams));
 	}
 }
 
-function buildTooltipTeam(tn){
+function buildTooltipTeam(teamID){
 	var teamName = "";
 	var lineBreak = "&#013;";
-	var idCharcterList = teams[tn-1].composition;
+
+	// Get team based on team id.
+	var teamComposition = [];
+	for(var i = 0; i < teams.length; i++){
+		if(teamID === teams[i].id){
+			teamComposition = teams[i].composition;
+		}
+	}
+
 	teamName += "<ul class='list-group list-group-flush'>";
-	for(var i = 0; i < idCharcterList.length; i++){
-		teamName +=
-			"<li class='list-group-item " + characters[idCharcterList[i].id].type + "'>" +
+	for(var i = 0; i < teamComposition.length; i++){
+		var character = [];
+		for(var i = 0; i < characters.length; i++){
+			for(var j = 0; j < teamComposition.length; j++){
+				if(teamComposition[j].id === characters[i].id){
+					character = characters[i];
+					teamName +=
+						"<li class='list-group-item " + character.type + "'>" +
 
-			"<span class='badge badge-primary badge-pill'>" +
-			"<i class='fas fa-bolt'></i> " +  characters[idCharcterList[i].id].init +
-			"</span>" + " " +
+						"<span class='badge badge-primary badge-pill'>" +
+						"<i class='fas fa-bolt'></i> " +  character.init +
+						"</span>" + " " +
 
-			"<span class='badge badge-secondary badge-pill'>" +
-			"<i class='fas fa-sort-numeric-up'></i> " + 	characters[idCharcterList[i].id].level +
-			"</span>" + " " +
+						"<span class='badge badge-secondary badge-pill'>" +
+						"<i class='fas fa-sort-numeric-up'></i> " + character.level +
+						"</span>" + " " +
 
-			"<span class='badge badge-danger badge-pill'>" +
-			"<i class='fas fa-heart' ></i> " + 	characters[idCharcterList[i].id].hp +
-			"</span>" + " " +
+						"<span class='badge badge-danger badge-pill'>" +
+						"<i class='fas fa-heart' ></i> " + character.hp +
+						"</span>" + " " +
 
-			characters[idCharcterList[i].id].name +
-			"</li>";
+						character.name +
+						"</li>";
+				}
+			}
+		}
+
+
 	}
 	teamName += "</ul>";
 	return teamName;
@@ -83,7 +101,7 @@ function generateTeamTable(id, tn, teams){
 	//table += "<td colspan='2' class='hiddenRow'></td>";
 	table += "<td colspan='4' class='hiddenRow'>";
 	table += "<div id='team_" + id + "' class='collapse'>";
-	table += buildTooltipTeam(tn, teams);
+	table += buildTooltipTeam(tn);
 	table += "</div>";
 	table += "</td>";
 	//table += "<td colspan='1' class='hiddenRow'></td>";

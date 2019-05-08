@@ -6,6 +6,7 @@ var players = [];
 var maps = [];
 var teams = []
 var characters = [];
+var teamPlayed = [];
 var urlData = 'data.json';
 
 function initGlobalVariables(){
@@ -19,6 +20,11 @@ function initGlobalVariables(){
         maps = result.maps;
   			teams = result.teams;
   			characters = result.characters;
+
+        // Get only the team played.
+        for(var i = 0; i < players.length; i++){
+          teamPlayed.push(players[i].team);
+        }
   		},
       error : function (jqXHR, textStatus, errorThrown){
         console.log("error " + textStatus);

@@ -28,58 +28,63 @@ function loadDashboardData(){
 			var s4 = 0;
 			var s5 = 0;
 			var s6 = 0;
-			for(var i = 0; i < characters.length; i++){
-				switch(characters[i].season){
-					case 1 :
-						s1Tot++;
-						break;
-					case 2 :
-					 	s2Tot++;
-						break;
-					case 3 :
-						s3Tot++;
-						break;
-					case 4 :
-						s4Tot++;
-						break;
-					case 5 :
-						s5Tot++;
-						break;
-					case 6 :
-						s6Tot++;
-						break;
-				}
-			}
-			for(var i = 0; i < teams.length; i++){
-				for(var j = 0; j < teams[i].composition.length; j++){
-					for(var k = 0; k < characters.length; k++){
-						if(characters[k].id === teams[i].composition[j].id){
-							switch(characters[k].season){
-								case 1 :
-									s1++;
-									break;+
-								case 2 :
-								 	s2++;
-									break;
-								case 3 :
-									s3++;
-									break;
-								case 4 :
-									s4++;
-									break;
-								case 5 :
-									s5++;
-									break;
-								case 5 :
-									s6++;
-									break;
-							}
-							break;
-						}
-					}
 
-				}
+			for(var k = 0; k < characters.length; k++){
+					switch(characters[k].season){
+						case 1 :
+							s1Tot++;
+							break;
+						case 2 :
+							s2Tot++;
+							break;
+						case 3 :
+							s3Tot++;
+							break;
+						case 4 :
+							s4Tot++;
+							break;
+						case 5 :
+							s5Tot++;
+							break;
+						case 6 :
+							s6Tot++;
+							break;
+					}
 			}
+
+			for(var t = 0; t < teams.length; t++){
+				if(teamPlayed.includes(teams[t].id)){
+					for(var co = 0; co < teams[t].composition.length; co++){
+						for(var k = 0; k < characters.length; k++){
+							if(characters[k].id === teams[t].composition[co].id){
+								switch(characters[k].season){
+									case 1 :
+										s1++;
+										break;
+									case 2 :
+										s2++;
+										break;
+									case 3 :
+										s3++;
+										break;
+									case 4 :
+										s4++;
+										break;
+									case 5 :
+										s5++;
+										break;
+									case 6 :
+										s6++;
+										break;
+								}
+								break;
+							}
+						} // k
+					} // co
+				}
+			} // t
+
+
 			//$('#s2Tot').text(s2Tot);
 			$('#s3Tot').text(s3Tot);
 			$('#s4Tot').text(s4Tot);
@@ -95,7 +100,6 @@ function loadDashboardData(){
 			var charCount = s1 + s2 + s3 + s4 + s5 + s6;
 			$('#charCount').text(charCount);
 			$('#charTot').text(charTot);
-
 }
 
 function buildPlayersTable(){

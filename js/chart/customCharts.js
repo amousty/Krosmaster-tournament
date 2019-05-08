@@ -16,12 +16,14 @@ function buildDataSet(){
       intitalizeEvent();
   }
   var myDataset = [];
-  for(var i = 0; i < teams.length; i++){
+  for(var i = 0; i < teamPlayed.length; i++){
+    var team = getTeam(teamPlayed[i]);
+
     var dataToPush = {};
 
-    dataToPush.label = teams[i].name,
-    dataToPush.borderColor = teams[i].colour,
-    dataToPush.backgroundColor = teams[i].colour,
+    dataToPush.label = team.name,
+    dataToPush.borderColor = team.colour,
+    dataToPush.backgroundColor = team.colour,
     dataToPush.fill= false,
     dataToPush.data= [
       calculateTeamValue(i, "HP"),

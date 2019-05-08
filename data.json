@@ -1,11 +1,11 @@
 {
 	"players": [
-		{"name" : "Adrien",		"team" : "1", "points" : 0},
-		{"name" : "Naomi",		"team" : "2", "points" : 0},
-		{"name" : "Antoine",	"team" : "3", "points" : 0},
-		{"name" : "Adeline",	"team" : "4", "points" : 0},
-		{"name" : "Thomas",		"team" : "5", "points" : 0},
-		{"name" : "Julien",		"team" : "7", "points" : 0}
+		{"name" : "Adrien",		"team" : 9, "points" : 0},
+		{"name" : "Naomi",		"team" : 1, "points" : 0},
+		{"name" : "Antoine",	"team" : 3, "points" : 0},
+		{"name" : "Adeline",	"team" : 4, "points" : 0},
+		{"name" : "Thomas",		"team" : 5, "points" : 0},
+		{"name" : "Julien",		"team" : 7, "points" : 0}
 	],
 	"maps": [
 		"Glacon",
@@ -14,12 +14,12 @@
 		"Mine Deurien",
 		"Plantation"
 	],
-	"Season-Played":[
-		"3",
-		"4",
-		"5",
-		"6"
-	]
+	"Season-Played": [
+		3,
+		4,
+		5,
+		6
+	],
 	"teams" : [
 		{"id" : 1, "name" : "Milimochon", "colour" : "#3C6E71", "composition" : [
 			{"id" : 1},
@@ -79,9 +79,15 @@
 			]
 		},
 		{"id" : 8, "name" : "Goulag", "colour" : "#DE9DA7", "composition" : [
-			{"id" : 14},
+			{"id" : 94},
 			{"id" : 36},
 			{"id" : 37}
+			]
+		},
+		{"id" : 9, "name" : "Omelette", "colour" : "#FFC75F", "composition" : [
+			{"id" : 14},
+			{"id" : 80},
+			{"id" : 69}
 			]
 		}
 	],
