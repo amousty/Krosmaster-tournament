@@ -7,6 +7,7 @@ var maps = [];
 var teams = []
 var characters = [];
 var teamPlayed = [];
+var competitiveSeason = [];
 var urlData = 'data.json';
 
 function initGlobalVariables(){
@@ -19,8 +20,10 @@ function initGlobalVariables(){
   			players = result.players;
         maps = result.maps;
   			teams = result.teams;
-  			characters = result.characters;
-
+  			characters = result.characters.sort(function(a, b){
+          return b.season - a.season;
+        });
+        competitiveSeason = result.competitiveSeason;
         // Get only the team played.
         for(var i = 0; i < players.length; i++){
           teamPlayed.push(players[i].team);
@@ -56,7 +59,6 @@ function sortResults(arr, prop, asc) {
         if (asc) return (a[prop] > b[prop]);
         else return (b[prop] > a[prop]);
     });
-
 }
 
 function  pickAValue(arrValue, type, random){
